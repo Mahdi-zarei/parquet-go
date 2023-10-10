@@ -660,11 +660,15 @@ func parseDecimalArgs(args string) (scale, precision int, err error) {
 	}
 	s, err := strconv.ParseInt(parts[0], 10, 32)
 	if err != nil {
-		return 0, 0, err
+		if parts[0] != "" {
+			return 0, 0, err
+		}
 	}
 	p, err := strconv.ParseInt(parts[1], 10, 32)
 	if err != nil {
-		return 0, 0, err
+		if parts[1] != "" {
+			return 0, 0, err
+		}
 	}
 	return int(s), int(p), nil
 }

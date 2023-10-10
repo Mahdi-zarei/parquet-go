@@ -883,7 +883,9 @@ func convertFixedLenByteArrayToString(v Value) (Value, error) {
 func convertStringToBoolean(v Value) (Value, error) {
 	b, err := strconv.ParseBool(v.string())
 	if err != nil {
-		return v, conversionError(v, "STRING", "BOOLEAN", err)
+		if v.string() != "" {
+			return v, conversionError(v, "STRING", "BOOLEAN", err)
+		}
 	}
 	return v.convertToBoolean(b), nil
 }
@@ -891,7 +893,9 @@ func convertStringToBoolean(v Value) (Value, error) {
 func convertStringToInt32(v Value) (Value, error) {
 	i, err := strconv.ParseInt(v.string(), 10, 32)
 	if err != nil {
-		return v, conversionError(v, "STRING", "INT32", err)
+		if v.string() != "" {
+			return v, conversionError(v, "STRING", "INT32", err)
+		}
 	}
 	return v.convertToInt32(int32(i)), nil
 }
@@ -899,7 +903,9 @@ func convertStringToInt32(v Value) (Value, error) {
 func convertStringToInt64(v Value) (Value, error) {
 	i, err := strconv.ParseInt(v.string(), 10, 64)
 	if err != nil {
-		return v, conversionError(v, "STRING", "INT64", err)
+		if v.string() != "" {
+			return v, conversionError(v, "STRING", "INT64", err)
+		}
 	}
 	return v.convertToInt64(i), nil
 }
@@ -919,7 +925,9 @@ func convertStringToInt96(v Value) (Value, error) {
 func convertStringToFloat(v Value) (Value, error) {
 	f, err := strconv.ParseFloat(v.string(), 32)
 	if err != nil {
-		return v, conversionError(v, "STRING", "FLOAT", err)
+		if v.string() != "" {
+			return v, conversionError(v, "STRING", "FLOAT", err)
+		}
 	}
 	return v.convertToFloat(float32(f)), nil
 }
@@ -927,7 +935,9 @@ func convertStringToFloat(v Value) (Value, error) {
 func convertStringToDouble(v Value) (Value, error) {
 	f, err := strconv.ParseFloat(v.string(), 64)
 	if err != nil {
-		return v, conversionError(v, "STRING", "DOUBLE", err)
+		if v.string() != "" {
+			return v, conversionError(v, "STRING", "DOUBLE", err)
+		}
 	}
 	return v.convertToDouble(f), nil
 }
