@@ -81,7 +81,11 @@ func Slice[To, From any](data []From) []To {
 
 // Bytes constructs a byte slice. The pointer to the first element of the slice
 // is set to data, the length and capacity are set to size.
+// if the data passed points to null, and empty byte array of the given size and cap is returned.
 func Bytes(data *byte, size int) []byte {
+	if data == nil {
+		return make([]byte, size, size)
+	}
 	return *(*[]byte)(unsafe.Pointer(&slice{
 		ptr: unsafe.Pointer(data),
 		len: size,
