@@ -139,7 +139,10 @@ func TestIssue272(t *testing.T) {
 	}
 
 	f := bytes.NewReader(b.Bytes())
-	r := parquet.NewGenericReader[T](f)
+	r, err := parquet.NewGenericReader[T](f)
+	if err != nil {
+		t.Fatal(err)
+	}
 
 	parquetRows := make([]parquet.Row, nRows)
 	n, err := r.ReadRows(parquetRows)
@@ -202,7 +205,10 @@ func TestIssue279(t *testing.T) {
 	}
 
 	f := bytes.NewReader(b.Bytes())
-	r := parquet.NewGenericReader[T](f)
+	r, err := parquet.NewGenericReader[T](f)
+	if err != nil {
+		t.Fatal(err)
+	}
 
 	parquetRows := make([]parquet.Row, nRows)
 	n, err := r.ReadRows(parquetRows)
@@ -294,7 +300,10 @@ func TestIssue302(t *testing.T) {
 				}
 
 				bufReader := bytes.NewReader(b.Bytes())
-				r := parquet.NewGenericReader[T](bufReader)
+				r, err := parquet.NewGenericReader[T](bufReader)
+				if err != nil {
+					t.Fatal(err)
+				}
 				values := make([]T, 3)
 				_, err = r.Read(values)
 				if !reflect.DeepEqual(expect, values) {

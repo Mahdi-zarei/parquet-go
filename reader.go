@@ -26,15 +26,15 @@ type GenericReader[T any] struct {
 //
 // If the option list may explicitly declare a schema, it must be compatible
 // with the schema generated from T.
-func NewGenericReader[T any](input io.ReaderAt, options ...ReaderOption) *GenericReader[T] {
+func NewGenericReader[T any](input io.ReaderAt, options ...ReaderOption) (*GenericReader[T], error) {
 	c, err := NewReaderConfig(options...)
 	if err != nil {
-		panic(err)
+		return nil, err
 	}
 
 	f, err := openFile(input)
 	if err != nil {
-		panic(err)
+		return nil, err
 	}
 
 	rowGroup := fileRowGroupOf(f)
@@ -63,7 +63,7 @@ func NewGenericReader[T any](input io.ReaderAt, options ...ReaderOption) *Generi
 
 	r.base.read.init(r.base.file.schema, r.base.file.rowGroup)
 	r.read = readFuncOf[T](t, r.base.file.schema)
-	return r
+	return r, nil
 }
 
 func NewGenericRowGroupReader[T any](rowGroup RowGroup, options ...ReaderOption) *GenericReader[T] {

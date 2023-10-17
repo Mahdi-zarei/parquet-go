@@ -175,7 +175,10 @@ func ExampleSearch() {
 	fmt.Printf("numPages: %d\n", offsetIndex.NumPages())
 	fmt.Printf("result found in page: %d\n", found)
 	if found < offsetIndex.NumPages() {
-		r := parquet.NewGenericReader[Row](file)
+		r, err := parquet.NewGenericReader[Row](file)
+		if err != nil {
+			log.Fatal(err)
+		}
 		defer r.Close()
 		// Seek to the first row in the page the result was found
 		r.SeekToRow(offsetIndex.FirstRowIndex(found))
@@ -243,14 +246,20 @@ func TestIssue362ParquetReadFromGenericReaders(t *testing.T) {
 	}
 	defer fp.Close()
 
-	r1 := parquet.NewGenericReader[any](fp)
+	r1, err := parquet.NewGenericReader[any](fp)
+	if err != nil {
+		t.Fatal(err)
+	}
 	rows1 := make([]any, r1.NumRows())
 	_, err = r1.Read(rows1)
 	if err != nil && err != io.EOF {
 		t.Fatal(err)
 	}
 
-	r2 := parquet.NewGenericReader[any](fp)
+	r2, err := parquet.NewGenericReader[any](fp)
+	if err != nil {
+		t.Fatal(err)
+	}
 	rows2 := make([]any, r2.NumRows())
 	_, err = r2.Read(rows2)
 	if err != nil && err != io.EOF {
@@ -289,7 +298,10 @@ func TestIssue368(t *testing.T) {
 		t.Fatal(err)
 	}
 
-	reader := parquet.NewGenericReader[any](pf)
+	reader, err := parquet.NewGenericReader[any](pf)
+	if err != nil {
+		t.Fatal(err)
+	}
 	defer reader.Close()
 
 	trs := make([]any, 1)
@@ -537,7 +549,10 @@ func TestNestedPointer(t *testing.T) {
 		t.Fatal(err)
 	}
 
-	pr := parquet.NewGenericReader[*Outer](bytes.NewReader(f.Bytes()))
+	pr, err := parquet.NewGenericReader[*Outer](bytes.NewReader(f.Bytes()))
+	if err != nil {
+		t.Fatal(err)
+	}
 
 	out := make([]*Outer, 1)
 	_, err = pr.Read(out)
@@ -1226,7 +1241,10 @@ func TestParquetAnyValueConversions(t *testing.T) {
 				t.Fatal(err)
 			}
 
-			pRdr := parquet.NewGenericReader[any](bytes.NewReader(buf.Bytes()))
+			pRdr, err := parquet.NewGenericReader[any](bytes.NewReader(buf.Bytes()))
+			if err != nil {
+				t.Fatal(err)
+			}
 			outRows := make([]any, 1)
 			if _, err := pRdr.Read(outRows); err != nil {
 				t.Fatal(err)

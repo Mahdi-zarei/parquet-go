@@ -74,7 +74,10 @@ func testGenericReaderRows[Row any](rows []Row) error {
 	if err := writer.Close(); err != nil {
 		return err
 	}
-	reader := parquet.NewGenericReader[Row](bytes.NewReader(buffer.Bytes()))
+	reader, err := parquet.NewGenericReader[Row](bytes.NewReader(buffer.Bytes()))
+	if err != nil {
+		return err
+	}
 	result := make([]Row, len(rows))
 	n, err := reader.Read(result)
 	if err != nil && !errors.Is(err, io.EOF) {
@@ -118,7 +121,10 @@ func TestIssue400(t *testing.T) {
 		t.Fatal(err)
 	}
 
-	r := parquet.NewGenericReader[A](bytes.NewReader(b.Bytes()))
+	r, err := parquet.NewGenericReader[A](bytes.NewReader(b.Bytes()))
+	if err != nil {
+		t.Fatal(err)
+	}
 	values := make([]A, 1)
 	_, err = r.Read(values)
 	if err != nil {
@@ -191,7 +197,10 @@ func testReadMinPageSize(readSize int, t *testing.T) {
 	if err != nil {
 		t.Fatal("os.Open", err)
 	}
-	reader := parquet.NewGenericReader[MyRow](file)
+	reader, err := parquet.NewGenericReader[MyRow](file)
+	if err != nil {
+		t.Fatal(err)
+	}
 	read := int64(0)
 	nRows := reader.NumRows()
 	rows := make([]MyRow, 0, nRows)

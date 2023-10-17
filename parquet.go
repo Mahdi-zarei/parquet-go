@@ -32,7 +32,10 @@ func Read[T any](r io.ReaderAt, size int64, options ...ReaderOption) (rows []T, 
 		return nil, err
 	}
 	rows = make([]T, file.NumRows())
-	reader := NewGenericReader[T](file, config)
+	reader, err := NewGenericReader[T](file, config)
+	if err != nil {
+		return nil, err
+	}
 	n, err := reader.Read(rows)
 	if err == io.EOF {
 		err = nil
