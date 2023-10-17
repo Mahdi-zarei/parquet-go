@@ -316,6 +316,9 @@ func (t booleanType) AssignValue(dst reflect.Value, src Value) error {
 	switch dst.Kind() {
 	case reflect.Bool:
 		dst.SetBool(v)
+	case reflect.Pointer:
+		ptr := &v
+		dst.Set(reflect.ValueOf(ptr))
 	default:
 		dst.Set(reflect.ValueOf(v))
 	}
@@ -399,6 +402,48 @@ func (t int32Type) AssignValue(dst reflect.Value, src Value) error {
 		dst.SetInt(int64(v))
 	case reflect.Uint8, reflect.Uint16, reflect.Uint32:
 		dst.SetUint(uint64(v))
+	case reflect.Pointer:
+		underlying := reflect.TypeOf(dst).Elem().Kind()
+		switch underlying {
+		case reflect.Float32:
+			val := float32(v)
+			dst.Set(reflect.ValueOf(&val))
+		case reflect.Float64:
+			val := float64(v)
+			dst.Set(reflect.ValueOf(&val))
+		case reflect.Int8:
+			val := int8(v)
+			dst.Set(reflect.ValueOf(&val))
+		case reflect.Int16:
+			val := int16(v)
+			dst.Set(reflect.ValueOf(&val))
+		case reflect.Int32:
+			dst.Set(reflect.ValueOf(&v))
+		case reflect.Int64:
+			val := int64(v)
+			dst.Set(reflect.ValueOf(&val))
+		case reflect.Uint8:
+			val := uint8(v)
+			dst.Set(reflect.ValueOf(&val))
+		case reflect.Uint16:
+			val := uint16(v)
+			dst.Set(reflect.ValueOf(&val))
+		case reflect.Uint32:
+			val := uint32(v)
+			dst.Set(reflect.ValueOf(&val))
+		case reflect.Uint64:
+			val := uint64(v)
+			dst.Set(reflect.ValueOf(&val))
+		case reflect.Int:
+			val := int(v)
+			dst.Set(reflect.ValueOf(&val))
+		case reflect.Uint:
+			val := uint(v)
+			dst.Set(reflect.ValueOf(&val))
+		default:
+			// trigger a panic for type correction
+			dst.Set(reflect.ValueOf(v))
+		}
 	default:
 		dst.Set(reflect.ValueOf(v))
 	}
@@ -482,6 +527,48 @@ func (t int64Type) AssignValue(dst reflect.Value, src Value) error {
 		dst.SetInt(v)
 	case reflect.Uint8, reflect.Uint16, reflect.Uint32, reflect.Uint64, reflect.Uint, reflect.Uintptr:
 		dst.SetUint(uint64(v))
+	case reflect.Pointer:
+		underlying := reflect.TypeOf(dst).Elem().Kind()
+		switch underlying {
+		case reflect.Float32:
+			val := float32(v)
+			dst.Set(reflect.ValueOf(&val))
+		case reflect.Float64:
+			val := float64(v)
+			dst.Set(reflect.ValueOf(&val))
+		case reflect.Int8:
+			val := int8(v)
+			dst.Set(reflect.ValueOf(&val))
+		case reflect.Int16:
+			val := int16(v)
+			dst.Set(reflect.ValueOf(&val))
+		case reflect.Int32:
+			val := int32(v)
+			dst.Set(reflect.ValueOf(&val))
+		case reflect.Int64:
+			dst.Set(reflect.ValueOf(&v))
+		case reflect.Uint8:
+			val := uint8(v)
+			dst.Set(reflect.ValueOf(&val))
+		case reflect.Uint16:
+			val := uint16(v)
+			dst.Set(reflect.ValueOf(&val))
+		case reflect.Uint32:
+			val := uint32(v)
+			dst.Set(reflect.ValueOf(&val))
+		case reflect.Uint64:
+			val := uint64(v)
+			dst.Set(reflect.ValueOf(&val))
+		case reflect.Int:
+			val := int(v)
+			dst.Set(reflect.ValueOf(&val))
+		case reflect.Uint:
+			val := uint(v)
+			dst.Set(reflect.ValueOf(&val))
+		default:
+			// trigger a panic for type correction
+			dst.Set(reflect.ValueOf(v))
+		}
 	default:
 		dst.Set(reflect.ValueOf(v))
 	}
@@ -561,6 +648,9 @@ func (t int96Type) EstimateDecodeSize(numValues int, src []byte, enc encoding.En
 
 func (t int96Type) AssignValue(dst reflect.Value, src Value) error {
 	v := src.Int96()
+	if dst.Kind() == reflect.Pointer {
+		dst.Set(reflect.ValueOf(&v))
+	}
 	dst.Set(reflect.ValueOf(v))
 	return nil
 }
@@ -640,6 +730,48 @@ func (t floatType) AssignValue(dst reflect.Value, src Value) error {
 	switch dst.Kind() {
 	case reflect.Float32, reflect.Float64:
 		dst.SetFloat(float64(v))
+	case reflect.Pointer:
+		underlying := reflect.TypeOf(dst).Elem().Kind()
+		switch underlying {
+		case reflect.Float32:
+			dst.Set(reflect.ValueOf(&v))
+		case reflect.Float64:
+			val := float64(v)
+			dst.Set(reflect.ValueOf(&val))
+		case reflect.Int8:
+			val := int8(v)
+			dst.Set(reflect.ValueOf(&val))
+		case reflect.Int16:
+			val := int16(v)
+			dst.Set(reflect.ValueOf(&val))
+		case reflect.Int32:
+			val := int32(v)
+			dst.Set(reflect.ValueOf(&val))
+		case reflect.Int64:
+			val := int64(v)
+			dst.Set(reflect.ValueOf(&val))
+		case reflect.Uint8:
+			val := uint8(v)
+			dst.Set(reflect.ValueOf(&val))
+		case reflect.Uint16:
+			val := uint16(v)
+			dst.Set(reflect.ValueOf(&val))
+		case reflect.Uint32:
+			val := uint32(v)
+			dst.Set(reflect.ValueOf(&val))
+		case reflect.Uint64:
+			val := uint64(v)
+			dst.Set(reflect.ValueOf(&val))
+		case reflect.Int:
+			val := int(v)
+			dst.Set(reflect.ValueOf(&val))
+		case reflect.Uint:
+			val := uint(v)
+			dst.Set(reflect.ValueOf(&val))
+		default:
+			// trigger a panic for type correction
+			dst.Set(reflect.ValueOf(v))
+		}
 	default:
 		dst.Set(reflect.ValueOf(v))
 	}
@@ -721,6 +853,48 @@ func (t doubleType) AssignValue(dst reflect.Value, src Value) error {
 	switch dst.Kind() {
 	case reflect.Float32, reflect.Float64:
 		dst.SetFloat(v)
+	case reflect.Pointer:
+		underlying := reflect.TypeOf(dst).Elem().Kind()
+		switch underlying {
+		case reflect.Float32:
+			val := float32(v)
+			dst.Set(reflect.ValueOf(&val))
+		case reflect.Float64:
+			dst.Set(reflect.ValueOf(&v))
+		case reflect.Int8:
+			val := int8(v)
+			dst.Set(reflect.ValueOf(&val))
+		case reflect.Int16:
+			val := int16(v)
+			dst.Set(reflect.ValueOf(&val))
+		case reflect.Int32:
+			val := int32(v)
+			dst.Set(reflect.ValueOf(&val))
+		case reflect.Int64:
+			val := int64(v)
+			dst.Set(reflect.ValueOf(&val))
+		case reflect.Uint8:
+			val := uint8(v)
+			dst.Set(reflect.ValueOf(&val))
+		case reflect.Uint16:
+			val := uint16(v)
+			dst.Set(reflect.ValueOf(&val))
+		case reflect.Uint32:
+			val := uint32(v)
+			dst.Set(reflect.ValueOf(&val))
+		case reflect.Uint64:
+			val := uint64(v)
+			dst.Set(reflect.ValueOf(&val))
+		case reflect.Int:
+			val := int(v)
+			dst.Set(reflect.ValueOf(&val))
+		case reflect.Uint:
+			val := uint(v)
+			dst.Set(reflect.ValueOf(&val))
+		default:
+			// trigger a panic for type correction
+			dst.Set(reflect.ValueOf(v))
+		}
 	default:
 		dst.Set(reflect.ValueOf(v))
 	}
@@ -804,6 +978,17 @@ func (t byteArrayType) AssignValue(dst reflect.Value, src Value) error {
 		dst.SetString(string(v))
 	case reflect.Slice:
 		dst.SetBytes(copyBytes(v))
+	case reflect.Pointer:
+		underlying := reflect.TypeOf(dst).Elem().Kind()
+		switch underlying {
+		case reflect.String:
+			str := string(v)
+			dst.Set(reflect.ValueOf(&str))
+		default:
+			// trigger a panic for type correction
+			val := reflect.ValueOf(string(v))
+			dst.Set(val)
+		}
 	default:
 		val := reflect.ValueOf(string(v))
 		dst.Set(val)
@@ -1582,7 +1767,7 @@ func (t *jsonType) EstimateDecodeSize(numValues int, src []byte, enc encoding.En
 func (t *jsonType) AssignValue(dst reflect.Value, src Value) error {
 	// Assign value using ByteArrayType for BC...
 	switch dst.Kind() {
-	case reflect.String:
+	case reflect.String, reflect.Pointer:
 		return byteArrayType{}.AssignValue(dst, src)
 	case reflect.Slice:
 		if dst.Type().Elem().Kind() == reflect.Uint8 {
