@@ -1,0 +1,88 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="AutoImportSettings">
+    <option name="autoReloadType" value="ALL" />
+  </component>
+  <component name="ChangeListManager">
+    <list default="true" id="2bd24930-8fc1-4771-a678-a04d6f2a208e" name="Changes" comment="">
+      <change beforePath="$PROJECT_DIR$/value.go" beforeDir="false" afterPath="$PROJECT_DIR$/value.go" afterDir="false" />
+    </list>
+    <option name="SHOW_DIALOG" value="false" />
+    <option name="HIGHLIGHT_CONFLICTS" value="true" />
+    <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
+    <option name="LAST_RESOLUTION" value="IGNORE" />
+  </component>
+  <component name="GOROOT" url="file://$PROJECT_DIR$/../../../../Program Files/Go" />
+  <component name="Git.Rebase.Settings">
+    <option name="NEW_BASE" value="HEAD~6" />
+    <option name="OPTIONS">
+      <set>
+        <option value="INTERACTIVE" />
+      </set>
+    </option>
+  </component>
+  <component name="Git.Settings">
+    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
+  </component>
+  <component name="GitRewordedCommitMessages">
+    <option name="commitMessagesMapping">
+      <RewordedCommitMessageMapping>
+        <option name="originalMessage" value="fix not detecting nil value" />
+        <option name="rewordedMessage" value="fix improper use of unsafe pointer" />
+      </RewordedCommitMessageMapping>
+      <RewordedCommitMessageMapping>
+        <option name="originalMessage" value="fix reader panic" />
+        <option name="rewordedMessage" value="change panic to error return" />
+      </RewordedCommitMessageMapping>
+      <RewordedCommitMessageMapping>
+        <option name="originalMessage" value="comment tests" />
+        <option name="rewordedMessage" value="comments tests" />
+      </RewordedCommitMessageMapping>
+      <RewordedCommitMessageMapping>
+        <option name="originalMessage" value="init" />
+        <option name="rewordedMessage" value="minor change in default int96 value" />
+      </RewordedCommitMessageMapping>
+      <RewordedCommitMessageMapping>
+        <option name="originalMessage" value="strconv" />
+        <option name="rewordedMessage" value="fix parsing empty strings as numbers" />
+      </RewordedCommitMessageMapping>
+      <RewordedCommitMessageMapping>
+        <option name="originalMessage" value="pointers.. ka?" />
+        <option name="rewordedMessage" value="allow pointers to be used as dst" />
+      </RewordedCommitMessageMapping>
+    </option>
+    <option name="currentCommit" value="6" />
+    <option name="onto" value="cde8189c4c26a01d846f04ae041db32f4b9a514d" />
+  </component>
+  <component name="MarkdownSettingsMigration">
+    <option name="stateVersion" value="1" />
+  </component>
+  <component name="ProjectId" id="2WWb6xSSGZD2rFKNW7Qbo43WpnQ" />
+  <component name="ProjectViewState">
+    <option name="hideEmptyMiddlePackages" value="true" />
+    <option name="showLibraryContents" value="true" />
+  </component>
+  <component name="PropertiesComponent">{
+  &quot;keyToString&quot;: {
+    &quot;RunOnceActivity.OpenProjectViewOnStart&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.go.formatter.settings.were.checked&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.go.migrated.go.modules.settings&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.go.modules.go.list.on.any.changes.was.set&quot;: &quot;true&quot;,
+    &quot;WebServerToolWindowFactoryState&quot;: &quot;false&quot;,
+    &quot;go.import.settings.migrated&quot;: &quot;true&quot;,
+    &quot;go.sdk.automatically.set&quot;: &quot;true&quot;,
+    &quot;last_opened_file_path&quot;: &quot;C:/Users/mahdi&quot;,
+    &quot;node.js.detected.package.eslint&quot;: &quot;true&quot;,
+    &quot;node.js.selected.package.eslint&quot;: &quot;(autodetect)&quot;,
+    &quot;nodejs_package_manager_path&quot;: &quot;npm&quot;
+  }
+}</component>
+  <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="application-level" UseSingleDictionary="true" transferred="true" />
+  <component name="TypeScriptGeneratedFilesManager">
+    <option name="version" value="3" />
+  </component>
+  <component name="VgoProject">
+    <settings-migrated>true</settings-migrated>
+  </component>
+</project>

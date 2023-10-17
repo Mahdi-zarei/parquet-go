@@ -793,6 +793,9 @@ func (v Value) Clone() Value {
 }
 
 func makeInt96(bits []byte) (i96 deprecated.Int96) {
+	if len(bits) < 12 {
+		bits = append(bits, make([]byte, 12-len(bits))...)
+	}
 	return deprecated.Int96{
 		2: binary.LittleEndian.Uint32(bits[8:12]),
 		1: binary.LittleEndian.Uint32(bits[4:8]),
