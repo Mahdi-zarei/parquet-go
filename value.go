@@ -453,20 +453,31 @@ func makeValueByteArray(kind Kind, data *byte, size int) Value {
 // they are usually inlined by the compiler and intended to be used inside the
 // parquet-go package because they tend to generate better code than their
 // exported counter part, which requires making a copy of the receiver.
-func (v *Value) isNull() bool            { return v.kind == 0 }
-func (v *Value) byte() byte              { return byte(v.u64) }
-func (v *Value) boolean() bool           { return v.u64 != 0 }
-func (v *Value) int32() int32            { return int32(v.u64) }
-func (v *Value) int64() int64            { return int64(v.u64) }
-func (v *Value) int96() deprecated.Int96 { return makeInt96(v.byteArray()) }
-func (v *Value) float() float32          { return math.Float32frombits(uint32(v.u64)) }
-func (v *Value) double() float64         { return math.Float64frombits(uint64(v.u64)) }
-func (v *Value) uint32() uint32          { return uint32(v.u64) }
-func (v *Value) uint64() uint64          { return v.u64 }
-func (v *Value) byteArray() []byte       { return unsafecast.Bytes(v.ptr, int(v.u64)) }
-func (v *Value) string() string          { return unsafecast.BytesToString(v.byteArray()) }
-func (v *Value) be128() *[16]byte        { return (*[16]byte)(unsafe.Pointer(v.ptr)) }
-func (v *Value) column() int             { return int(^v.columnIndex) }
+func (v *Value) isNull() bool  { return v.kind == 0 }
+func (v *Value) byte() byte    { return byte(v.u64) }
+func (v *Value) boolean() bool { return v.u64 != 0 }
+func (v *Value) int32() int32  { return int32(v.u64) }
+func (v *Value) int64() int64  { return int64(v.u64) }
+func (v *Value) int96() deprecated.Int96 {
+	if v.ptr == nil {
+		val := v.u64
+		return deprecated.Int64ToInt96(int64(val))
+	}
+
+	sz := int(v.u64)
+	if sz > 12 {
+		sz = 12
+	}
+	return makeInt96(unsafecast.Bytes(v.ptr, sz))
+}
+func (v *Value) float() float32    { return math.Float32frombits(uint32(v.u64)) }
+func (v *Value) double() float64   { return math.Float64frombits(uint64(v.u64)) }
+func (v *Value) uint32() uint32    { return uint32(v.u64) }
+func (v *Value) uint64() uint64    { return v.u64 }
+func (v *Value) byteArray() []byte { return unsafecast.Bytes(v.ptr, int(v.u64)) }
+func (v *Value) string() string    { return unsafecast.BytesToString(v.byteArray()) }
+func (v *Value) be128() *[16]byte  { return (*[16]byte)(unsafe.Pointer(v.ptr)) }
+func (v *Value) column() int       { return int(^v.columnIndex) }
 
 func (v Value) convertToBoolean(x bool) Value {
 	v.kind = ^int8(Boolean)
